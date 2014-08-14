@@ -9,7 +9,7 @@
     tools:context=".MelanomaActivity" >
     
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonc1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,4 +17,15 @@
         android:text="@string/capture_image_text" 
         android:onClick="onCaptureImageButtonClicked"/>
 
+    <Button
+        android:id="@+id/buttona1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonc1"
+        android:layout_alignRight="@+id/buttonc1"
+        android:layout_below="@+id/buttonc1"
+        android:layout_marginTop="45dp"
+        android:onClick="onCaptureMapCorpButtonClicked"
+        android:text="@string/jump_map_corporal" />
+    
 </RelativeLayout>

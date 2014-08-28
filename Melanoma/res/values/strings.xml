@@ -5,5 +5,12 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="capture_image_text">Capturar Imagem</string>
+    <string name="jump_map_corporal">Jump Mapeamento Corporal</string>
+    <string name="title_activity_seleciona_regiao_corporal">SelecionaRegiaoCorporal</string>
+    <string name="RegDesejada">Selecione a região desejada:</string>
+    <string name="title_activity_regiao">RegiaoA</string>
+    <string name="title_activity_regiao_especifica">RegiaoEspecifica</string>
+    <string name="title_activity_select_specific_region">SelectSpecificRegion</string>
+    <string name="button">Button</string>
 
 </resources>

@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -117,10 +116,6 @@ public class MelanomaActivity extends Activity {
 		}
 	}
 	
-	
-	
-	
-	
 
 	public void onCaptureImageButtonClicked(View view) {
 		// create Intent to take a picture and return control to the calling
@@ -143,7 +138,17 @@ public class MelanomaActivity extends Activity {
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 		*/
 	}
+	
+	public void onCaptureMapCorpButtonClicked(View view) {
+		Intent in = new Intent(MelanomaActivity.this, SelecionaRegiaoCorporal.class);
+		startActivity(in);
+	}
 
+	public void onCaptureteste(View view) {
+		Intent ini = new Intent(MelanomaActivity.this, SelectSpecificRegion.class);
+		startActivity(ini);
+	}
+	
 	/** Create a file Uri for saving an image or video */
 	private static Uri getOutputMediaFileUri(int type) {
 		return Uri.fromFile(getOutputMediaFile(type));

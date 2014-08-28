@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="onCaptureteste"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -9,7 +10,7 @@
     tools:context=".MelanomaActivity" >
     
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonc1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -17,4 +18,25 @@
         android:text="@string/capture_image_text" 
         android:onClick="onCaptureImageButtonClicked"/>
 
+    <Button
+        android:id="@+id/buttona1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonc1"
+        android:layout_alignRight="@+id/buttonc1"
+        android:layout_below="@+id/buttonc1"
+        android:layout_marginTop="45dp"
+        android:onClick="onCaptureMapCorpButtonClicked"
+        android:text="@string/jump_map_corporal" />
+
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttona1"
+        android:layout_marginLeft="43dp"
+        android:layout_toRightOf="@+id/buttonc1"
+        android:onClick="onCaptureteste"
+        android:text="@string/capture_image_text" />
+    
 </RelativeLayout>

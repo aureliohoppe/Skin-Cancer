@@ -30,7 +30,14 @@
             android:name=".SelectSpecificRegion"
             android:label="@string/title_activity_select_specific_region" >
         </activity>
-        <activity android:name="SelecionaRegiaoCorporal" android:label="@string/title_activity_seleciona_regiao_corporal"></activity>
+        <activity
+            android:name=".SelecionaRegiaoCorporal"
+            android:label="@string/title_activity_seleciona_regiao_corporal" >
+        </activity>
+        <activity
+            android:name=".ExistImages"
+            android:label="@string/title_activity_exist_images" >
+        </activity>
     </application>
 
 </manifest>

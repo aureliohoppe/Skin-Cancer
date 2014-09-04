@@ -6,11 +6,16 @@
     <string name="hello_world">Hello world!</string>
     <string name="capture_image_text">Capturar Imagem</string>
     <string name="jump_map_corporal">Jump Mapeamento Corporal</string>
+    <string name="jump_rel_img">Jump Associa Imagem</string>
     <string name="title_activity_seleciona_regiao_corporal">SelecionaRegiaoCorporal</string>
     <string name="RegDesejada">Selecione a região desejada:</string>
     <string name="title_activity_regiao">RegiaoA</string>
     <string name="title_activity_regiao_especifica">RegiaoEspecifica</string>
     <string name="title_activity_select_specific_region">SelectSpecificRegion</string>
     <string name="button">Button</string>
+    <string name="title_activity_exist_images">ExistImages</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>

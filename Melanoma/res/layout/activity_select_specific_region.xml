@@ -9,6 +9,7 @@
     tools:context="br.furb.melanoma.SelectSpecificRegion" >
 
     <FrameLayout
+        android:id="@+id/frameLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true" >
@@ -17,9 +18,87 @@
             android:id="@+id/imageView1"
             android:layout_width="1000dp"
             android:layout_height="555dp"
-            android:layout_weight="1"
             android:src="@drawable/a1" />
-
     </FrameLayout>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/frameLayout1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/frameLayout1"
+        android:layout_alignTop="@+id/frameLayout1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="542dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+	
+            <ImageView
+                android:id="@+id/ImageView10"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView09"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+            
+            <ImageView
+                android:id="@+id/ImageView08"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView07"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView06"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView05"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView04"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView03"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView02"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+            <ImageView
+                android:id="@+id/ImageView01"
+                android:layout_width="125dp"
+                android:layout_height="match_parent"
+                android:padding="15dp" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
 
 </RelativeLayout>

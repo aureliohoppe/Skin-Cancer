@@ -22,7 +22,9 @@ public class ControlImageA extends BaseAdapter{
 	public ControlImageA(Context c) {
 		this.ContextA = c;
 	}
-			
+
+
+
 	public float getScale(boolean focused, int offset) {
 		return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
 	}

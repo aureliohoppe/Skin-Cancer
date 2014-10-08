@@ -10,53 +10,23 @@
 
     <FrameLayout
         android:id="@+id/FrameFixImage"
-        android:layout_width="434dp"
-        android:layout_height="228dp"
-        android:layout_alignTop="@+id/RelativeLayout1"
-        android:layout_centerHorizontal="true" >
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true" >
 
         <br.furb.melanoma.CustomImageView
             android:id="@+id/imageViewFixImages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/item_alerta"
-            android:layout_width="136dp"
-            android:layout_height="163dp"
-            android:padding="10sp"
-            android:textColor="#FF000000"
-            android:textSize="20sp" />
-
+            android:layout_width="846dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left" />
     </FrameLayout>
 
-    <FrameLayout
-        android:id="@+id/FrameExistImages"
-        android:layout_width="434dp"
-        android:layout_height="228dp"
-        android:layout_alignBottom="@+id/RelativeLayout1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="59dp" >
-
-        <ImageView
-            android:id="@+id/imageViewExistImages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/RelativeLayout1"
-        android:layout_width="150dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
+    <ExpandableListView
+        android:id="@+id/ExpandableListViewFixImages"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:orientation="vertical" >
-
-        <ListView
-            android:id="@+id/listView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-        </ListView>
-    </RelativeLayout>
+        android:layout_centerVertical="true" >
+    </ExpandableListView>
 
 </RelativeLayout>

@@ -38,6 +38,10 @@
             android:name=".ExistImages"
             android:label="@string/title_activity_exist_images" >
         </activity>
+        <activity
+            android:name=".MelanomaPhotoAnalyser"
+            android:label="@string/title_activity_melanoma_photo_analyser" >
+        </activity>
     </application>
 
 </manifest>

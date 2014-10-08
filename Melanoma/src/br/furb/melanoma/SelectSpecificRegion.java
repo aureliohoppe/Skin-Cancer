@@ -5,156 +5,135 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import com.googlecode.javacv.FrameGrabber.ImageMode;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
+import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Files.FileColumns;
+import android.provider.MediaStore.Images;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.view.MotionEvent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class SelectSpecificRegion extends Activity {
-	
+
 	static int positionGallery;
+	static int posX, posY;
 	ImageView display;
+	Images imagem;
+	File file;
+	private ExpandListAdapter ExpAdapter;
+	private ArrayList<Group> ExpListItems;
+	private ExpandableListView ExpandList;
+    private String[] FilePathStrings;
+    private String[] FileNameStrings;
+    private static File[] listFile;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int YOUR_SELECT_PICTURE_REQUEST_CODE = 0;
 	private Uri fileUri;
 	private Uri outputFileUri;
 	private AlertDialog alerta;
-
+	SparseArray<Group> groups = new SparseArray<Group>();
+	static SelectPicsOnMelanomaDirectory selImagens;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_specific_region);
 
-	display = (ImageView) findViewById(R.id.imageViewFixImages);
+		// exibe imagem da posiçao selecionada na tela anterior
+		display = (ImageView) findViewById(R.id.imageViewFixImages);
+		setDisplay();
+		GetImageStorageMelanoma();
 		
-		// os valores dos digitos comparativos são:
-		// primeiro digito numero da gallery
-		// segundo posição vetorial na gallery
-		if (SelecionaRegiaoCorporal.positionGallery == 10) {
-			display.setImageResource(R.drawable.a1);
-		} else {
-			if (SelecionaRegiaoCorporal.positionGallery == 11) {
-				display.setImageResource(R.drawable.a2);
-			} else {
-				if (SelecionaRegiaoCorporal.positionGallery == 12) {
-					display.setImageResource(R.drawable.a3);
-				} else {
-					if (SelecionaRegiaoCorporal.positionGallery == 13) {
-						display.setImageResource(R.drawable.a4);
-					} else {
-						if (SelecionaRegiaoCorporal.positionGallery == 14) {
-							display.setImageResource(R.drawable.a5);
-						} else {
-							if (SelecionaRegiaoCorporal.positionGallery == 20) {
-								display.setImageResource(R.drawable.b1);
-							} else {
-								if (SelecionaRegiaoCorporal.positionGallery == 21) {
-									display.setImageResource(R.drawable.b2);
-								} else {
-									if (SelecionaRegiaoCorporal.positionGallery == 22) {
-										display.setImageResource(R.drawable.b3);
-									} else {
-										if (SelecionaRegiaoCorporal.positionGallery == 23) {
-											display.setImageResource(R.drawable.b4);
-										} else {
-											if (SelecionaRegiaoCorporal.positionGallery == 24) {
-												display.setImageResource(R.drawable.b5);
-											} else {
-												if (SelecionaRegiaoCorporal.positionGallery == 30) {
-													display.setImageResource(R.drawable.c1);
-												} else {
-													if (SelecionaRegiaoCorporal.positionGallery == 31) {
-														display.setImageResource(R.drawable.c2);
-													} else {
-														if (SelecionaRegiaoCorporal.positionGallery == 32) {
-															display.setImageResource(R.drawable.c3);
-														} else {
-															if (SelecionaRegiaoCorporal.positionGallery == 33) {
-																display.setImageResource(R.drawable.c4);
-															} else {
-																if (SelecionaRegiaoCorporal.positionGallery == 34) {
-																	display.setImageResource(R.drawable.c5);
-																} else {
-																	if (SelecionaRegiaoCorporal.positionGallery == 40) {
-																		display.setImageResource(R.drawable.d1);
-																	} else {
-																		if (SelecionaRegiaoCorporal.positionGallery == 41) {
-																			display.setImageResource(R.drawable.d2);
-																		} else {
-																			if (SelecionaRegiaoCorporal.positionGallery == 42) {
-																				display.setImageResource(R.drawable.d3);
-																			} else {
-																				if (SelecionaRegiaoCorporal.positionGallery == 43) {
-																					display.setImageResource(R.drawable.d4);
-																				} else {
-																					if (SelecionaRegiaoCorporal.positionGallery == 44) {
-																						display.setImageResource(R.drawable.d5);
-																					} else {
-																						if (SelecionaRegiaoCorporal.positionGallery == 50) {
-																							display.setImageResource(R.drawable.e1);
-																						} else {
-																							if (SelecionaRegiaoCorporal.positionGallery == 51) {
-																								display.setImageResource(R.drawable.e2);
-																							} else {
-																								if (SelecionaRegiaoCorporal.positionGallery == 52) {
-																									display.setImageResource(R.drawable.e3);
-																								} else {
-																									if (SelecionaRegiaoCorporal.positionGallery == 53) {
-																										display.setImageResource(R.drawable.e4);
-																									} else {
-																										if (SelecionaRegiaoCorporal.positionGallery == 54) {
-																											display.setImageResource(R.drawable.e5);
-																										}}}}}}}}}}}}}}}}}}}}}}}}}
+		display.setOnTouchListener(new OnTouchListener() {
 
-/*		display.setOnTouchListener(new OnSwipeTouchListener(this) {
-		    public void onSwipeTop() {
-		        Toast.makeText(SelectSpecificRegion.this, "top", Toast.LENGTH_SHORT).show();
-		    }
-		    public void onSwipeRight() {
-		        Toast.makeText(SelectSpecificRegion.this, "right", Toast.LENGTH_SHORT).show();
-		    }
-		    public void onSwipeLeft() {
-		        Toast.makeText(SelectSpecificRegion.this, "left", Toast.LENGTH_SHORT).show();
-		    }
-		    public void onSwipeBottom() {
-		        Toast.makeText(SelectSpecificRegion.this, "bottom", Toast.LENGTH_SHORT).show();
-		    }
-		    @Override
-		    public boolean onTouch(View v, MotionEvent event) {
-		    	return super.onTouch(v, event);
-		    }
-		});*/
-		
-		display.setOnLongClickListener(new OnLongClickListener() {
-	        @Override
-	        public boolean onLongClick(View v) {
-	            
-	        	
-	        	
-	        	
-	            return true;
-	        }
-	    });
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				int action = event.getAction();
+				posX = (int) event.getX();
+				posY = (int) event.getY();
+				cameraAlert();
+
+				switch (action) {
+				case MotionEvent.ACTION_DOWN:
+
+					break;
+				case MotionEvent.ACTION_MOVE:
+
+					break;
+				case MotionEvent.ACTION_UP:
+
+					break;
+
+				}
+				return false;
+			}
+
+		});
+
+		selImagens = new SelectPicsOnMelanomaDirectory();
+		ExpandList = (ExpandableListView) findViewById(R.id.ExpandableListViewFixImages);
+		ExpListItems = GetImageStorageMelanoma();
+		ExpAdapter = new ExpandListAdapter(this, ExpListItems);
+		ExpandList.setAdapter(ExpAdapter);
 	}
+
+	
+	public ArrayList<Group> GetImageStorageMelanoma() {
+
+		SelectPicsOnMelanomaDirectory selImagens = new SelectPicsOnMelanomaDirectory();
 		
+		// Check for SD Card
+		if (!Environment.getExternalStorageState().equals(
+				Environment.MEDIA_MOUNTED)) {
+			Toast.makeText(this, "Error! No SDCARD Found!", Toast.LENGTH_LONG)
+			.show();
+		} else {
+			file = new File(
+					Environment.getExternalStorageDirectory(), File.separator + "/MelanomaPics/");
+			file.mkdirs();
+		}
+		// pega todas as imagens do diretorio MelanomaPics e coloca dentro de uma lista
+		if (file.isDirectory()) {
+			listFile = file.listFiles();		
+		}
+		return selImagens.SelectPicsOnMelanomaDirectory(listFile);
+	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -180,14 +159,19 @@ public class SelectSpecificRegion extends Activity {
 
 		// Determine Uri of camera image to save.
 		final File root = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "MyDir" + File.separator);
+				+ File.separator + "MelanomaPics" + File.separator);
 		root.mkdirs();
-		
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-				.format(new Date());
-			
 
-		final String fname = "IMG_demo_" + timeStamp + ".jpg";
+		// chama a funcao que retorna o grupo da imagem
+		String imgpath = new MelanomaPicsSaveControl().setImagePath();
+		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		String group = new String();
+		
+		group = selImagens.setGroupName(imgpath, listFile), listFile);
+
+		final String fname = "Melanoma_" + imgpath + "_" + group + "_" + posX + "_" + posY
+				+ "_" + timeStamp + ".jpg";
+		
 		final File sdImageMainDirectory = new File(root, fname);
 		outputFileUri = Uri.fromFile(sdImageMainDirectory);
 
@@ -250,7 +234,7 @@ public class SelectSpecificRegion extends Activity {
 			}
 		}
 	}
-	
+
 	/** Create a file Uri for saving an image or video */
 	private static Uri getOutputMediaFileUri(int type) {
 		return Uri.fromFile(getOutputMediaFile(type));
@@ -267,27 +251,32 @@ public class SelectSpecificRegion extends Activity {
 
 		File mediaStorageDir = new File(
 				Environment
-						.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-				"MyCameraApp");
-
-		// This location works best if you want the created images to be shared
-		// between applications and persist after your app has been uninstalled.
+				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+				"MelanomaPics");
 
 		// Create the storage directory if it does not exist
 		if (!mediaStorageDir.exists()) {
 			if (!mediaStorageDir.mkdirs()) {
-				Log.d("MyCameraApp", "failed to create directory");
+				Log.d("MelanomaPics", "failed to create directory");
 				return null;
 			}
 		}
 
 		// Create a media file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-				.format(new Date());
+		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
+
+		// pega o path da imagem de acordo com a posicao da foto
+		String imgpath = new MelanomaPicsSaveControl().setImagePath();
 		File mediaFile;
+		String group = new String();
+		group = selImagens.setGroupName(selImagens.devolveQtd(imgpath, listFile));
+
+	
 		if (type == FileColumns.MEDIA_TYPE_IMAGE) {
+
 			mediaFile = new File(mediaStorageDir.getPath() + File.separator
-					+ "IMG_demo_" + timeStamp + ".jpg");
+					+  "Melanoma_" + imgpath + "_" + group + "_" + posX + "_" + posY
+					+ "_" + timeStamp + ".jpg");
 		} else {
 			return null;
 		}
@@ -302,28 +291,167 @@ public class SelectSpecificRegion extends Activity {
 		}
 		return false;
 	}
-	
-	private void optionList() { 
-		//Lista de itens 
+
+	private void optionList() {
+		// Lista de itens
 		ArrayList<String> itens = new ArrayList<String>();
-		itens.add("Ruim");
-		itens.add("Mediano");
-		itens.add("Bom");
-		itens.add("Ótimo");
-		//adapter utilizando um layout customizado (TextView) 
-		ArrayAdapter adapter = new ArrayAdapter(this, R.layout.activity_select_specific_region, itens);
+		itens.add("Fotografar");
+
+		// adapter utilizando um layout customizado (TextView)
+		ArrayAdapter adapter = new ArrayAdapter(this,
+				R.layout.activity_select_specific_region, itens);
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Qualifique este software:");
-		//define o diálogo como uma lista, passa o adapter.
-		builder.setSingleChoiceItems(adapter, 0, new DialogInterface.OnClickListener() { 
-			public void onClick(DialogInterface arg0, int arg1) { 
-				Toast.makeText(SelectSpecificRegion.this, "posição selecionada=" + arg1, Toast.LENGTH_SHORT).show();
-				alerta.dismiss(); } });
+		builder.setTitle("Teste:");
+
+		// define o diálogo como uma lista, passa o adapter.
+		builder.setSingleChoiceItems(adapter, 0,
+				new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface arg0, int arg1) {
+				alerta.dismiss();
+			}
+		});
 		alerta = builder.create();
 		alerta.show();
-		} 
-}
+	}
 
-		
-	
+	/*
+	 * 
+	 * aqui estava o trecho de codigo }
+	 */
 
+	public void cameraAlert() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("Camera");
+		builder.setMessage("Capturar nova imagem?");
+		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+				openImageIntent();
+			}
+
+		});
+
+		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+
+		builder.create().show();
+
+	}
+
+	public int setDisplay() {
+		// os valores dos digitos comparativos são:
+		// primeiro digito numero da gallery
+		// segundo posição vetorial na gallery
+		switch (SelecionaRegiaoCorporal.positionGallery) {
+		case 10:
+			display.setImageResource(R.drawable.a1);
+			return R.drawable.a1;
+
+		case 11:
+			display.setImageResource(R.drawable.a2);
+			return R.drawable.a2;
+
+		case 12:
+			display.setImageResource(R.drawable.a3);
+			return R.drawable.a3;
+
+		case 13:
+			display.setImageResource(R.drawable.a4);
+			return R.drawable.a4;
+
+		case 14:
+			display.setImageResource(R.drawable.a5);
+			return R.drawable.a5;
+
+		case 20:
+			display.setImageResource(R.drawable.b1);
+			return R.drawable.b1;
+
+		case 21:
+			display.setImageResource(R.drawable.b2);
+			return R.drawable.b2;
+
+		case 22:
+			display.setImageResource(R.drawable.b3);
+			return R.drawable.b3;
+
+		case 23:
+			display.setImageResource(R.drawable.b4);
+			return R.drawable.b4;
+
+		case 24:
+			display.setImageResource(R.drawable.b5);
+			return R.drawable.b5;
+
+		case 30:
+			display.setImageResource(R.drawable.c1);
+			return R.drawable.c1;
+
+		case 31:
+			display.setImageResource(R.drawable.c2);
+			return R.drawable.c2;
+
+		case 32:
+			display.setImageResource(R.drawable.c3);
+			return R.drawable.c3;
+
+		case 33:
+			display.setImageResource(R.drawable.c4);
+			return R.drawable.c4;
+
+		case 34:
+			display.setImageResource(R.drawable.c5);
+			return R.drawable.c5;
+
+		case 40:
+			display.setImageResource(R.drawable.d1);
+			return R.drawable.d1;
+
+		case 41:
+			display.setImageResource(R.drawable.d2);
+			return R.drawable.d2;
+
+		case 42:
+			display.setImageResource(R.drawable.d3);
+			return R.drawable.d3;
+
+		case 43:
+			display.setImageResource(R.drawable.d4);
+			return R.drawable.d4;
+
+		case 44:
+			display.setImageResource(R.drawable.d5);
+			return R.drawable.d5;
+
+		case 50:
+			display.setImageResource(R.drawable.e1);
+			return R.drawable.e1;
+
+		case 51:
+			display.setImageResource(R.drawable.e2);
+			return R.drawable.e2;
+
+		case 52:
+			display.setImageResource(R.drawable.e3);
+			return R.drawable.e3;
+
+		case 53:
+			display.setImageResource(R.drawable.e4);
+			return R.drawable.e4;
+
+		case 54:
+			display.setImageResource(R.drawable.e5);
+			return R.drawable.e5;
+
+		default:
+			break;
+		}
+		return 0;
+	}
+	}

@@ -1,11 +1,17 @@
 package br.furb.melanoma;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.googlecode.javacv.FrameGrabber.ImageMode;
+
+import ExpandableListViewControl.ExpandListAdapter;
+import ExpandableListViewControl.Group;
+import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ComponentName;
@@ -14,50 +20,55 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PointF;
+import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
-import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Files.FileColumns;
 import android.provider.MediaStore.Images;
 import android.util.Log;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View.OnClickListener;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 import android.view.MotionEvent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import br.furb.melanoma.DataBasePointControl.*;
+
 public class SelectSpecificRegion extends Activity {
 
 	static int positionGallery;
-	static int posX, posY;
+	int posX, posY;
 	ImageView display;
 	Images imagem;
 	File file;
 	private ExpandListAdapter ExpAdapter;
 	private ArrayList<Group> ExpListItems;
 	private ExpandableListView ExpandList;
-    private String[] FilePathStrings;
-    private String[] FileNameStrings;
     private static File[] listFile;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int YOUR_SELECT_PICTURE_REQUEST_CODE = 0;
@@ -65,7 +76,8 @@ public class SelectSpecificRegion extends Activity {
 	private Uri outputFileUri;
 	private AlertDialog alerta;
 	SparseArray<Group> groups = new SparseArray<Group>();
-	static SelectPicsOnMelanomaDirectory selImagens;
+	SelectPicsOnMelanomaDirectory selImagens;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,9 +86,12 @@ public class SelectSpecificRegion extends Activity {
 
 		// exibe imagem da posiçao selecionada na tela anterior
 		display = (ImageView) findViewById(R.id.imageViewFixImages);
-		setDisplay();
-		GetImageStorageMelanoma();
+		//View childView = getMyView();
 		
+		
+		desenhaImagemDisplay();
+		GetImageStorageMelanoma();
+				
 		display.setOnTouchListener(new OnTouchListener() {
 
 			@Override
@@ -85,6 +100,7 @@ public class SelectSpecificRegion extends Activity {
 				int action = event.getAction();
 				posX = (int) event.getX();
 				posY = (int) event.getY();
+				
 				cameraAlert();
 
 				switch (action) {
@@ -103,37 +119,46 @@ public class SelectSpecificRegion extends Activity {
 			}
 
 		});
+		populaListView();
 
-		selImagens = new SelectPicsOnMelanomaDirectory();
-		ExpandList = (ExpandableListView) findViewById(R.id.ExpandableListViewFixImages);
-		ExpListItems = GetImageStorageMelanoma();
-		ExpAdapter = new ExpandListAdapter(this, ExpListItems);
-		ExpandList.setAdapter(ExpAdapter);
 	}
 
-	
+	// varre o diretorio MelanomaPics e carrega todas as imagens para a
+	// expandable listview
 	public ArrayList<Group> GetImageStorageMelanoma() {
-
 		SelectPicsOnMelanomaDirectory selImagens = new SelectPicsOnMelanomaDirectory();
-		
+		return selImagens.SelectPicsOnMelanomaDirectory(CreateListFiles());
+	}
+	
+	public void populaListView(){
+		ExpListItems = GetImageStorageMelanoma();
+		if (ExpListItems != null) {
+			ExpAdapter = new ExpandListAdapter(this, ExpListItems);
+			ExpandList = (ExpandableListView) findViewById(R.id.ExpandableListViewFixImages);
+			ExpandList.setAdapter(ExpAdapter);
+		}
+	}
+
+	public File[] CreateListFiles() {
 		// Check for SD Card
 		if (!Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED)) {
 			Toast.makeText(this, "Error! No SDCARD Found!", Toast.LENGTH_LONG)
-			.show();
+					.show();
 		} else {
-			file = new File(
-					Environment.getExternalStorageDirectory(), File.separator + "/MelanomaPics/");
+			file = new File(Environment.getExternalStorageDirectory(),
+					File.separator + "/MelanomaPics/" + File.separator
+							+ "/01133124909/");
 			file.mkdirs();
 		}
-		// pega todas as imagens do diretorio MelanomaPics e coloca dentro de uma lista
+		// pega todas as imagens do diretorio MelanomaPics e coloca dentro de
+		// uma lista
 		if (file.isDirectory()) {
-			listFile = file.listFiles();		
+			listFile = file.listFiles();
 		}
-		return selImagens.SelectPicsOnMelanomaDirectory(listFile);
+
+		return listFile;
 	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,9 +169,6 @@ public class SelectSpecificRegion extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -158,18 +180,22 @@ public class SelectSpecificRegion extends Activity {
 	private void openImageIntent() {
 
 		// Determine Uri of camera image to save.
+		
+		
+		//TODO NO LUGAR ONDE ESTA O NUMERO DO MEU CPF CRIAR A FUNCAO PRA CONTROLAR O CPF DE CADA USUARIO
 		final File root = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "MelanomaPics" + File.separator);
+				+ File.separator + "MelanomaPics" + File.separator + "01133124909" + File.separator);
 		root.mkdirs();
 
 		// chama a funcao que retorna o grupo da imagem
 		String imgpath = new MelanomaPicsSaveControl().setImagePath();
 		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
 		String group = new String();
+		selImagens = new SelectPicsOnMelanomaDirectory();
 		
-		group = selImagens.setGroupName(imgpath, listFile), listFile);
+		group = selImagens.setGroupName(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY);
 
-		final String fname = "Melanoma_" + imgpath + "_" + group + "_" + posX + "_" + posY
+		final String fname = imgpath + "_" + group + "_" + posX + "_" + posY
 				+ "_" + timeStamp + ".jpg";
 		
 		final File sdImageMainDirectory = new File(root, fname);
@@ -177,16 +203,15 @@ public class SelectSpecificRegion extends Activity {
 
 		// Camera.
 		final List<Intent> cameraIntents = new ArrayList<Intent>();
-		final Intent captureIntent = new Intent(
-				android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		final Intent captureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 		final PackageManager packageManager = getPackageManager();
-		final List<ResolveInfo> listCam = packageManager.queryIntentActivities(
-				captureIntent, 0);
+		final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
+		
 		for (ResolveInfo res : listCam) {
 			final String packageName = res.activityInfo.packageName;
 			final Intent intent = new Intent(captureIntent);
-			intent.setComponent(new ComponentName(res.activityInfo.packageName,
-					res.activityInfo.name));
+			
+			intent.setComponent(new ComponentName(res.activityInfo.packageName,res.activityInfo.name));
 			intent.setPackage(packageName);
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
 			cameraIntents.add(intent);
@@ -198,14 +223,13 @@ public class SelectSpecificRegion extends Activity {
 		galleryIntent.setAction(Intent.ACTION_GET_CONTENT);
 
 		// Chooser of filesystem options.
-		final Intent chooserIntent = Intent.createChooser(galleryIntent,
-				"Select Source");
+		final Intent chooserIntent = Intent.createChooser(galleryIntent,"Select Source");
 
 		// Add the camera options.
-		chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,
-				cameraIntents.toArray(new Parcelable[] {}));
+		chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,cameraIntents.toArray(new Parcelable[] {}));
 
 		startActivityForResult(chooserIntent, YOUR_SELECT_PICTURE_REQUEST_CODE);
+		
 	}
 
 	@Override
@@ -235,100 +259,34 @@ public class SelectSpecificRegion extends Activity {
 		}
 	}
 
-	/** Create a file Uri for saving an image or video */
-	private static Uri getOutputMediaFileUri(int type) {
-		return Uri.fromFile(getOutputMediaFile(type));
+	public void setPosX(int posx) {
+		posX = posx;
 	}
 
-	/** Create a File for saving an image or video */
-	private static File getOutputMediaFile(int type) {
-		// To be safe, you should check that the SDCard is mounted
-		// using Environment.getExternalStorageState() before doing this.
-
-		if (!isExternalStorageWritable()) {
-			Log.d("external storage", "not available for read and write");
-		}
-
-		File mediaStorageDir = new File(
-				Environment
-				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-				"MelanomaPics");
-
-		// Create the storage directory if it does not exist
-		if (!mediaStorageDir.exists()) {
-			if (!mediaStorageDir.mkdirs()) {
-				Log.d("MelanomaPics", "failed to create directory");
-				return null;
-			}
-		}
-
-		// Create a media file name
-		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
-
-		// pega o path da imagem de acordo com a posicao da foto
-		String imgpath = new MelanomaPicsSaveControl().setImagePath();
-		File mediaFile;
-		String group = new String();
-		group = selImagens.setGroupName(selImagens.devolveQtd(imgpath, listFile));
-
+	public void setPosY(int posy) {
+		posY = posy;
+	}
 	
-		if (type == FileColumns.MEDIA_TYPE_IMAGE) {
-
-			mediaFile = new File(mediaStorageDir.getPath() + File.separator
-					+  "Melanoma_" + imgpath + "_" + group + "_" + posX + "_" + posY
-					+ "_" + timeStamp + ".jpg");
-		} else {
-			return null;
-		}
-
-		return mediaFile;
-	}
-
-	private static boolean isExternalStorageWritable() {
-		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			return true;
-		}
-		return false;
-	}
-
-	private void optionList() {
-		// Lista de itens
-		ArrayList<String> itens = new ArrayList<String>();
-		itens.add("Fotografar");
-
-		// adapter utilizando um layout customizado (TextView)
-		ArrayAdapter adapter = new ArrayAdapter(this,
-				R.layout.activity_select_specific_region, itens);
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Teste:");
-
-		// define o diálogo como uma lista, passa o adapter.
-		builder.setSingleChoiceItems(adapter, 0,
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface arg0, int arg1) {
-				alerta.dismiss();
-			}
-		});
-		alerta = builder.create();
-		alerta.show();
-	}
-
-	/*
-	 * 
-	 * aqui estava o trecho de codigo }
-	 */
 
 	public void cameraAlert() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
 		builder.setTitle("Camera");
+		String imgpath = new MelanomaPicsSaveControl().setImagePath();
+
+		
+/*		if (selImagens.perteceGrupo(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY) == 0) {
+			builder.setMessage("Capturar imagem para novo grupo?");
+		} else {
+			builder.setMessage("Inserir nova imagem no grupo " + selImagens.perteceGrupo(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY)+" ?");
+		}*/
+
 		builder.setMessage("Capturar nova imagem?");
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
 				dialog.dismiss();
 				openImageIntent();
+				
 			}
 
 		});
@@ -341,6 +299,45 @@ public class SelectSpecificRegion extends Activity {
 		});
 
 		builder.create().show();
+		
+	}
+		
+	public void desenhaImagemDisplay() {
+		Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(),
+				setDisplay());
+		
+		Paint paint = new Paint();
+		paint.setColor(Color.BLUE);
+		 paint.setTextSize(10);
+		  // text shadow
+		  paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
+
+		
+		Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
+		Bitmap mutableBitmap = workingBitmap
+				.copy(Bitmap.Config.ARGB_8888, true);
+		
+		Canvas canvas = new Canvas(mutableBitmap);
+		
+		Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+		paintText.setColor(Color.BLUE);
+		paintText.setTextSize(50);
+		paintText.setStyle(Style.FILL);
+		paintText.setShadowLayer(10f, 10f, 10f, Color.BLACK);
+
+		Rect rectText = new Rect();
+		paintText.getTextBounds("1", 0, 1,
+				rectText);
+
+		canvas.drawText("1", 0, rectText.height(), paintText);
+		
+		
+		// CRIAR O FOR PRA QUE DESENHE TODOS OS PONTOS NECESSARIOS
+
+		canvas.drawCircle(10, 10, 3, paint);
+		
+		display.setAdjustViewBounds(true);
+		display.setImageBitmap(mutableBitmap);
 
 	}
 
@@ -454,4 +451,4 @@ public class SelectSpecificRegion extends Activity {
 		}
 		return 0;
 	}
-	}
+}

@@ -1,5 +1,8 @@
-package br.furb.melanoma;
+package ControlImage;
 
+
+import br.furb.melanoma.R;
+import br.furb.melanoma.R.drawable;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +11,14 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-public class ControlImageB extends BaseAdapter{
+public class ControlImageC extends BaseAdapter{
 
-	private Context ContextB;
+	private Context ContextC;
 	
-	private static int[] ImagesGroupB = { R.drawable.b1, R.drawable.b2, R.drawable.b3, R.drawable.b4, R.drawable.b5};
+	static int[] ImagesGroupC = { R.drawable.c1, R.drawable.c2, R.drawable.c3, R.drawable.c4, R.drawable.c5};
 
-	public ControlImageB(Context c) {
-		this.ContextB = c;
+	public ControlImageC(Context c) {
+		this.ContextC = c;
 	}
 	
 		
@@ -23,17 +26,17 @@ public class ControlImageB extends BaseAdapter{
 		return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
 	}
 
-	public long getItemIdB(int position) {
+	public long getItemIdC(int position) {
 		return 0;
 	}
 
-	public static int[] getImagesB() {
-		return ImagesGroupB;
+	public static int[] getImagesC() {
+		return ImagesGroupC;
 	}
 	
 	@Override
 	public int getCount() {
-		return this.ImagesGroupB.length;
+		return this.ImagesGroupC.length;
 	}
 
 	@Override
@@ -43,14 +46,14 @@ public class ControlImageB extends BaseAdapter{
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
+
 		return 0;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ImageView img = new ImageView(this.ContextB);
-		img.setImageResource(this.ImagesGroupB[position]);
+		ImageView img = new ImageView(this.ContextC);
+		img.setImageResource(this.ImagesGroupC[position]);
 		img.setScaleType(ImageView.ScaleType.FIT_XY);
 		img.setLayoutParams(new Gallery.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
 		return img;

@@ -1,7 +1,12 @@
-	package br.furb.melanoma;
+	package ExpandableListViewControl;
 
 
 	import java.util.ArrayList;
+
+import br.furb.melanoma.R;
+import br.furb.melanoma.R.id;
+import br.furb.melanoma.R.layout;
+import br.furb.melanoma.SelectPicsOnMelanomaDirectory;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -15,6 +20,7 @@ import android.widget.TextView;
 
 	    private Context context;
 	    private ArrayList<Group> groups;
+	    SelectPicsOnMelanomaDirectory selPics;
 
 	    public ExpandListAdapter(Context context, ArrayList<Group> groups) {
 	        this.context = context;
@@ -36,16 +42,18 @@ import android.widget.TextView;
 	    public View getChildView(int groupPosition, int childPosition,
 	            boolean isLastChild, View convertView, ViewGroup parent) {
 
+	    	selPics = new SelectPicsOnMelanomaDirectory();
+	    	
 	        Child child = (Child) getChild(groupPosition, childPosition);
 	        if (convertView == null) {
 	            LayoutInflater infalInflater = (LayoutInflater) context
 	                    .getSystemService(context.LAYOUT_INFLATER_SERVICE);
 	            convertView = infalInflater.inflate(R.layout.listview_child_melanoma, null);
 	        }
-	        TextView tv = (TextView) convertView.findViewById(R.id.country_name);
-	        ImageView iv = (ImageView) convertView.findViewById(R.id.flag);
+	        TextView tv = (TextView) convertView.findViewById(R.id.image_date);
+	        ImageView iv = (ImageView) convertView.findViewById(R.id.melanoma_photo);
 
-	        tv.setText(child.getName().toString());
+	        tv.setText(selPics.getArqDate(child.getName()));
 	        iv.setImageURI(Uri.fromFile(child.getImage()));
 
 
@@ -97,4 +105,26 @@ import android.widget.TextView;
 	        return true;
 	    }
 
+	    public void notifyDataSetChanged()
+        {
+            // Refresh List rows
+            super.notifyDataSetChanged();
+        }
+ 
+        @Override
+        public boolean isEmpty()
+        {
+            return ((groups == null) || groups.isEmpty());
+        }
+ 
+        @Override
+        public boolean areAllItemsEnabled()
+        {
+            return true;
+        }
+         
+         
+         
+
+    
 	}

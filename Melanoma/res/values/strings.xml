@@ -19,5 +19,12 @@
     <string name="title_section3">Section 3</string>
     <string name="image">image</string>
     <string name="title_activity_melanoma_photo_analyser">MelanomaPhotoAnalyser</string>
+    <string name="novo_paciente">Cadastrar novo paciente</string>
+    <string name="selecionar_paciente">Acessar paciente</string>
+    <string name="novo">Novo</string>
+    <string name="title_activity_cadastro_paciente">CadastroPaciente</string>
+    <string name="informe_nome_paciente">Informe o nome do paciente:</string>
+    <string name="informe_cpf">Informe o CPF do paciente:</string>
+    <string name="ok">OK</string>
 
 </resources>

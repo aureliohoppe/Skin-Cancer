@@ -1,4 +1,4 @@
-package br.furb.melanoma;
+package ExpandableListViewControl;
 
 import java.util.ArrayList;
 import java.util.List;

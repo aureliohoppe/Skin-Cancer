@@ -1,5 +1,10 @@
 package br.furb.melanoma;
 
+import ControlImage.ControlImageA;
+import ControlImage.ControlImageB;
+import ControlImage.ControlImageC;
+import ControlImage.ControlImageD;
+import ControlImage.ControlImageE;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -4,252 +4,479 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import ExpandableListViewControl.Group;
+import ExpandableListViewControl.GroupCreationControl;
 import android.os.Environment;
 import android.provider.MediaStore.Images;
 import android.widget.ExpandableListView;
 
+import br.furb.melanoma.DataBasePointControl.*;
+
 public class SelectPicsOnMelanomaDirectory {
-	private ExpandListAdapter ExpAdapter;
-	private ArrayList<Group> ExpListItems;
-	private ExpandableListView ExpandList;
+
 	private GroupCreationControl GP;
-	private String[] FilePathStrings;
-	private String[] FileNameStrings;
+	private SelectSpecificRegion SelectSpecificRegion;
 	private File[] listaImagens;
 
 	public ArrayList<Group> SelectPicsOnMelanomaDirectory(File[] listFile) {
 
 		GP = new GroupCreationControl();
-
+		ArrayList<Group> ExpListItems = new ArrayList<Group>();
+		String stg;
 		// CLASSE QUE FAZ A SELEÇÃO DAS IMAGENS QUE ESTÃO SALVAS NO DIRETÓRIO
 		// MELANOMAPICS
 		// PARA DEPOIS ACRESCENTA-LAS NO EXPANDABLELISTVIEW
 
 		switch (SelecionaRegiaoCorporal.positionGallery) {
-		case 10:
-			listaImagens = new File[devolveQtd("A1", listFile)];	
-			
-			//TODO FAZER O FOR PARA ACRESCENTAR TODOS OS GRUPOS EXISTENTES
-			
-			ExpListItems = GP.SetStandardGroups(devolveQtd("A1", listFile), setGroupNameParaNovoGrupo("A1", listaImagens),devolveLista("A1", listFile));
+		case 10:			
+			stg = "A1";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
-			return ExpListItems;
-
-/*		case 11:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("A2")) {
-
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
+
+		case 11:
+			stg = "A2";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
+
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
+				}
+
+				return ExpListItems;
+			} else {
+				return null;
+			}
+
 
 		case 12:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("A3")) {
+			stg = "A3";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 13:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("A4")) {
+			stg = "A4";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
-
+			
 		case 14:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("A5")) {
+			stg = "A5";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 20:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("B1")) {
+			stg = "B1";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
+
 
 		case 21:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("B2")) {
+			stg = "B2";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 22:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("B3")) {
+			stg = "B3";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 23:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("B4")) {
+			stg = "B4";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 24:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("B5")) {
+			stg = "B5";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 30:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("C1")) {
+			stg = "C1";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 31:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("C2")) {
+			stg = "C2";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 32:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("C3")) {
+			stg = "C3";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 33:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("C4")) {
+			stg = "C4";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 34:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("C5")) {
+			stg = "C5";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 40:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("D1")) {
+			stg = "D1";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 41:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("D2")) {
+			stg = "D2";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 42:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("D3")) {
+			stg = "D3";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 43:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("D4")) {
+			stg = "D4";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 44:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("D5")) {
+			stg = "D5";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 50:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("E1")) {
+			stg = "E1";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
-			}
 
-			return;
+				return ExpListItems;
+			} else {
+				return null;
+			}
 
 		case 51:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("E2")) {
+			stg = "E2";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 52:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("E3")) {
+			stg = "E3";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 53:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("E4")) {
+			stg = "E4";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;
 
 		case 54:
-			for (int i = 0; i < listFile.length; i++) {
-				if (listFile[i].getName().contains("E5")) {
+			stg = "E5";
+			if (devolveQtd(stg, listFile) != 0) {
+				listaImagens = new File[devolveQtd(stg, listFile)];
+				listaImagens = devolveListaSelecionados(stg, listFile);
 
+				for (int x = 1; x <= getQtdGrupos(devolveListaSelecionados(stg,listFile)); x++) {
+					if (getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x), x) != 0) {
+						ExpListItems.addAll(GP.SetStandardGroups(getQtdEmListaGrupo(getListaDeGrupo(listaImagens, x),x),"Grupo " + x,getListaDeGrupo(listaImagens, x)));
+					}
 				}
+
+				return ExpListItems;
+			} else {
+				return null;
 			}
 
-			return;*/
 
 		default:
 			break;
@@ -259,9 +486,7 @@ public class SelectPicsOnMelanomaDirectory {
 	
 	// retorno a quantidade de arquivos que tem com o padrao A1, A2...
 	public int devolveQtd(String stg, File[] listFile) {
-
 		int qtd = 0;
-			
 		for (int i = 0; i < listFile.length; i++) {
 			if (listFile[i].getName().contains(stg)) {
 				qtd++;
@@ -270,13 +495,14 @@ public class SelectPicsOnMelanomaDirectory {
 		return qtd;
 	}
 
-	// devolve a lista somente com os elentos selecionados de acordo com o padrao A1, A2...
-	public File[] devolveLista(String stg, File[] listFile) {
+	// devolve a lista somente com os elentos selecionados de acordo com o
+	// padrao A1, A2...
+	public File[] devolveListaSelecionados(String stg, File[] listFile) {
 
 		int qtd = 0;
 
 		File[] listaDeSelecionados = new File[devolveQtd(stg, listFile)];
-	
+
 		for (int i = 0; i < listFile.length; i++) {
 			if (listFile[i].getName().contains(stg)) {
 				listaDeSelecionados[qtd] = listFile[i].getAbsoluteFile();
@@ -285,66 +511,136 @@ public class SelectPicsOnMelanomaDirectory {
 		}
 		return listaDeSelecionados;
 	}
+	
+	public String getGroupName (File arqName){
+		String array[] = new String[5];
 
-	public void verificaSePossuiGrupo(){
-		
-		
-		
+		// extrai o valor do grupo
+		array =arqName.getName().split(" ");
+		array = array[1].split("_");
+
+		return "Grupo "+ array[0];
+	}
+
+	public int getGroupNumber (File arqName){
+		String array[] = new String[5];
+
+		// extrai o valor do grupo
+		array =arqName.getName().split(" ");
+		array = array[1].split("_");
+
+		return Integer.parseInt(array[0]);
 	}
 	
-	
+	public String getArqDate(String arqName) {
+		String array[] = new String[5];
+		String data[] = new String[8];
+		String dataJunto = new String();
+		String dataSeparada = new String();
+
+		// extrai o valor do grupo
+		array = arqName.split(" ");
+		array = array[1].split("_");
+		dataJunto = array[3];
+
+		for (int i = 0; i < 8; i++) {
+
+			data[i] = dataJunto.substring(i, i + 1);
+
+		}
+
+		dataSeparada = data[0] + data[1] + data[2] + data[3] + "-" + data[4]
+				+ data[5] + "-" + data[6] + data[7];
+
+		return dataSeparada;
+	}
 	
 	// vai dizer qual deve ser o nome do proximo grupo
-	public String setGroupNameParaNovoGrupo(String imagesLX, File[] listFile) {
-
-		File[] listaDeSelecionados = new File[devolveQtd(imagesLX, listFile)];
+	public String setGroupName(String imagesLX, File[] listaDeSelecionados, int posx, int posy) {
 		String name = null;
+		PointReader pt = new PointReader();
 
-		if (devolveQtd(imagesLX, listFile) == 0) {
+		if (devolveQtd(imagesLX, listaDeSelecionados) == 0) {
 			name = "Grupo 1";
 		} else {
-			if (devolveQtd(imagesLX, listFile) == 1) {
-				name = "Grupo 2";
-			} else {
-				name = "Grupo "
-						+ (devolveMaiorValorDeGrupo(listaDeSelecionados,
-								imagesLX, listFile));
+			if (pt.controlaPontosExistentes(listaDeSelecionados, posx, posy)!= null){
+				SelectSpecificRegion = new SelectSpecificRegion();
+				name = getGroupName(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy));
+				SelectSpecificRegion.setPosX(pt.devolvePosX(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy).getName()));
+				SelectSpecificRegion.setPosY(pt.devolvePosY(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy).getName()));
+			}else {
+				name = "Grupo " + ((getQtdGrupos(listaDeSelecionados))+1);
 			}
 		}
 		return name;
 	}
-	
-	// deve fazer a comparacao entre os dois caminhos pra ver qual tem o maior
-	// valor de grupo
-	public int devolveMaiorValorDeGrupo(File[] listaSelecionados,
-			String imagesLX, File[] listFile) {
+
+	public int perteceGrupo(String imagesLX, File[] listaDeSelecionados,
+			int posx, int posy) {
+		int value = 0;
+		PointReader pt = new PointReader();
+
+		if (pt.controlaPontosExistentes(listaDeSelecionados, posx, posy) != null) {
+			value = getGroupNumber(pt.controlaPontosExistentes(
+					listaDeSelecionados, posx, posy));
+			
+		} else {
+			value = 0;
+		}
+
+		return value;
+	}
+
+	// metodo que retorna o valor do maior grupo existente
+	public int getQtdGrupos(File[] listaSelecionados) {
 		int x = 0, y = 0, resultado = 0;
-
-		String array[] = new String[5];
-
-		// extrai o valor do grupo da primeira string
-		array = listaSelecionados[0].getName().split(" ");
-		array = array[1].split("_");
-		resultado = Integer.parseInt(array[0]);
-
-		array = null;
+	
+		resultado = getGroupNumber(listaSelecionados[0].getAbsoluteFile());
 
 		for (y = 1; y < listaSelecionados.length; y++) {
-
-			// extrai o valor do grupo da segunda string
-			array = listaSelecionados[y].getName().split(" ");
-			array = array[1].split("_");
-
-			y = Integer.parseInt(array[0]);
-			array = null;
 			
-			// retorna o maior valor
-			if (resultado > y) {
-				resultado = resultado;
-			} else
-				resultado = y;
+			x = getGroupNumber(listaSelecionados[y].getAbsoluteFile());
+
+			if (resultado <= x) {
+				resultado = x;
+			} 			
 		}
 		return resultado;
+	}
+
+	// metodo que retorna a lista de arquivos existentes em determinado grupo
+	public File[] getListaDeGrupo(File[] listaSelecionados, int numeroGrupo) {
+
+		File[] listaResposta = new File[getQtdEmListaGrupo(listaSelecionados,
+				numeroGrupo)];
+		int ctrl = 0, x = 0;
+
+		for (int y = 0; y < listaSelecionados.length; y++) {
+			x = getGroupNumber(listaSelecionados[y].getAbsoluteFile());
+
+			// retorna o maior valor
+			if (x == numeroGrupo) {
+				listaResposta[ctrl] = listaSelecionados[y].getAbsoluteFile();
+				ctrl++;
+			}
+		}
+		return listaResposta;
+	}
+	
+
+	// metodo que retorna a quantidade de arquivos por grupo
+	public int getQtdEmListaGrupo(File[] listaSelecionados, int numeroGrupo) {
+		int ctrl = 0, x = 0;
+
+		for (int y = 0; y < listaSelecionados.length; y++) {
+			x = getGroupNumber(listaSelecionados[y].getAbsoluteFile());
+
+			// conta a qtd de elementos que determinado grupo possui
+			if (x == numeroGrupo) {
+				ctrl++;
+			}
+		}
+		return ctrl;
 	}
 
 }

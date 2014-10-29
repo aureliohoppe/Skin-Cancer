@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.furb.melanoma.SelectSpecificRegion" >
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/FrameFixImage"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -16,17 +16,19 @@
 
         <br.furb.melanoma.CustomImageView
             android:id="@+id/imageViewFixImages"
-            android:layout_width="846dp"
-            android:layout_height="fill_parent"
-            android:layout_gravity="left" />
-    </FrameLayout>
+            android:layout_width="657dp"
+            android:layout_height="345dp"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 
     <ExpandableListView
         android:id="@+id/ExpandableListViewFixImages"
-        android:layout_width="160dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true" >
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/FrameFixImage" >
+
     </ExpandableListView>
 
 </RelativeLayout>

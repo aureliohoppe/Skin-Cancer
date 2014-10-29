@@ -1,6 +1,8 @@
-package br.furb.melanoma;
+package ControlImage;
 
 
+import br.furb.melanoma.R;
+import br.furb.melanoma.R.drawable;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;

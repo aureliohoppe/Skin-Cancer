@@ -1,45 +1,41 @@
-package br.furb.melanoma;
+package ControlImage;
 
-import android.app.ActionBar.LayoutParams;
+import br.furb.melanoma.R;
+import br.furb.melanoma.R.drawable;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+public class ControlImageB extends BaseAdapter{
 
-public class ControlImageA extends BaseAdapter{
-
-	private Context ContextA;
+	private Context ContextB;
 	
-	private static int[] ImagesGroupA = { R.drawable.a1, R.drawable.a2, R.drawable.a3, R.drawable.a4, R.drawable.a5};
-                     
-	public ControlImageA(Context c) {
-		this.ContextA = c;
+	private static int[] ImagesGroupB = { R.drawable.b1, R.drawable.b2, R.drawable.b3, R.drawable.b4, R.drawable.b5};
+
+	public ControlImageB(Context c) {
+		this.ContextB = c;
 	}
-
-
-
+	
+		
 	public float getScale(boolean focused, int offset) {
 		return Math.max(0, 1.0f / (float) Math.pow(2, Math.abs(offset)));
 	}
 
-	public long getItemIdA(int position) {
+	public long getItemIdB(int position) {
 		return 0;
 	}
 
-	public static int[] getImagesA() {
-		return ImagesGroupA;
+	public static int[] getImagesB() {
+		return ImagesGroupB;
 	}
-
+	
 	@Override
 	public int getCount() {
-		return this.ImagesGroupA.length;
+		return this.ImagesGroupB.length;
 	}
 
 	@Override
@@ -49,13 +45,14 @@ public class ControlImageA extends BaseAdapter{
 
 	@Override
 	public long getItemId(int position) {
+		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ImageView img = new ImageView(this.ContextA);
-		img.setImageResource(this.ImagesGroupA[position]);
+		ImageView img = new ImageView(this.ContextB);
+		img.setImageResource(this.ImagesGroupB[position]);
 		img.setScaleType(ImageView.ScaleType.FIT_XY);
 		img.setLayoutParams(new Gallery.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT));
 		return img;

@@ -42,6 +42,14 @@
             android:name=".MelanomaPhotoAnalyser"
             android:label="@string/title_activity_melanoma_photo_analyser" >
         </activity>
+        <activity
+            android:name=".CadastroPaciente"
+            android:label="@string/title_activity_cadastro_paciente"
+            android:parentActivityName=".MelanomaActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.furb.melanoma.MelanomaActivity" />
+        </activity>
     </application>
 
 </manifest>

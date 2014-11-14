@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 import com.googlecode.javacv.FrameGrabber.ImageMode;
 
-import ExpandableListViewControl.ExpandListAdapter;
-import ExpandableListViewControl.Group;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -34,6 +32,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Files.FileColumns;
@@ -57,7 +56,14 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import br.furb.melanoma.DataBasePointControl.*;
+import br.furb.melanoma.R;
+import br.furb.melanoma.ExpandableListViewControl.ExpandListAdapter;
+import br.furb.melanoma.ExpandableListViewControl.Group;
+import br.furb.melanoma.PointControl.*;
+import br.furb.melanoma.R.drawable;
+import br.furb.melanoma.R.id;
+import br.furb.melanoma.R.layout;
+import br.furb.melanoma.R.menu;
 
 public class SelectSpecificRegion extends Activity {
 
@@ -72,11 +78,10 @@ public class SelectSpecificRegion extends Activity {
     private static File[] listFile;
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	private static final int YOUR_SELECT_PICTURE_REQUEST_CODE = 0;
-	private Uri fileUri;
 	private Uri outputFileUri;
 	private AlertDialog alerta;
 	SparseArray<Group> groups = new SparseArray<Group>();
-	SelectPicsOnMelanomaDirectory selImagens;
+	ExListViewController selImagens;
 
 	
 	@Override
@@ -84,49 +89,40 @@ public class SelectSpecificRegion extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_specific_region);
 
-		// exibe imagem da posiçao selecionada na tela anterior
 		display = (ImageView) findViewById(R.id.imageViewFixImages);
-		//View childView = getMyView();
-		
-		
 		desenhaImagemDisplay();
 		GetImageStorageMelanoma();
 				
 		display.setOnTouchListener(new OnTouchListener() {
-
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-
 				int action = event.getAction();
 				posX = (int) event.getX();
 				posY = (int) event.getY();
-				
 				cameraAlert();
-
-				switch (action) {
-				case MotionEvent.ACTION_DOWN:
-
-					break;
-				case MotionEvent.ACTION_MOVE:
-
-					break;
-				case MotionEvent.ACTION_UP:
-
-					break;
-
-				}
 				return false;
 			}
-
 		});
 		populaListView();
-
 	}
+	public void screenRefresh(View view) {
+		display = (ImageView) findViewById(R.id.imageViewFixImages);
+		desenhaImagemDisplay();
+		GetImageStorageMelanoma();
+		populaListView();
+	}
+	
+	/*				
+	 * 				FAZER FUNCIONAR A ATRIBUIÇÃO DO VALOR DE POSX E POSY
+	 * 				selImagens = new ExListViewController();
+					String imgpath = new MelanomaPicsSaveControl().setImagePath();
+					selImagens.setXeYGrupoPertencente(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()),  posX, posY);
+					*/
 
 	// varre o diretorio MelanomaPics e carrega todas as imagens para a
 	// expandable listview
 	public ArrayList<Group> GetImageStorageMelanoma() {
-		SelectPicsOnMelanomaDirectory selImagens = new SelectPicsOnMelanomaDirectory();
+		ExListViewController selImagens = new ExListViewController();
 		return selImagens.SelectPicsOnMelanomaDirectory(CreateListFiles());
 	}
 	
@@ -148,7 +144,7 @@ public class SelectSpecificRegion extends Activity {
 		} else {
 			file = new File(Environment.getExternalStorageDirectory(),
 					File.separator + "/MelanomaPics/" + File.separator
-							+ "/01133124909/");
+							+ MelanomaActivity.pacientSelected);
 			file.mkdirs();
 		}
 		// pega todas as imagens do diretorio MelanomaPics e coloca dentro de
@@ -156,7 +152,6 @@ public class SelectSpecificRegion extends Activity {
 		if (file.isDirectory()) {
 			listFile = file.listFiles();
 		}
-
 		return listFile;
 	}
 
@@ -179,24 +174,20 @@ public class SelectSpecificRegion extends Activity {
 
 	private void openImageIntent() {
 
-		// Determine Uri of camera image to save.
-		
-		
-		//TODO NO LUGAR ONDE ESTA O NUMERO DO MEU CPF CRIAR A FUNCAO PRA CONTROLAR O CPF DE CADA USUARIO
 		final File root = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "MelanomaPics" + File.separator + "01133124909" + File.separator);
+				+ File.separator + "MelanomaPics" + File.separator + MelanomaActivity.pacientSelected + File.separator);
 		root.mkdirs();
 
 		// chama a funcao que retorna o grupo da imagem
 		String imgpath = new MelanomaPicsSaveControl().setImagePath();
-		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Date());
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 		String group = new String();
-		selImagens = new SelectPicsOnMelanomaDirectory();
+		selImagens = new ExListViewController();
 		
 		group = selImagens.setGroupName(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY);
-
-		final String fname = imgpath + "_" + group + "_" + posX + "_" + posY
-				+ "_" + timeStamp + ".jpg";
+		selImagens.setXeYGrupoPertencente(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()),  posX, posY);
+		
+		final String fname = imgpath + "_" + group + "_" + posX + "_" + posY+ "_" + timeStamp + ".jpg";
 		
 		final File sdImageMainDirectory = new File(root, fname);
 		outputFileUri = Uri.fromFile(sdImageMainDirectory);
@@ -229,6 +220,7 @@ public class SelectSpecificRegion extends Activity {
 		chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,cameraIntents.toArray(new Parcelable[] {}));
 
 		startActivityForResult(chooserIntent, YOUR_SELECT_PICTURE_REQUEST_CODE);
+		
 		
 	}
 
@@ -266,21 +258,32 @@ public class SelectSpecificRegion extends Activity {
 	public void setPosY(int posy) {
 		posY = posy;
 	}
+	public void ajustaTela(){
+		display = (ImageView) findViewById(R.id.imageViewFixImages);
+		desenhaImagemDisplay();
+		GetImageStorageMelanoma();
 	
-
+		System.out.println("PASSOU NA ATUALIZAÇÃO");
+	}
+	
+	
 	public void cameraAlert() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("Camera");
+		selImagens = new ExListViewController();
 		String imgpath = new MelanomaPicsSaveControl().setImagePath();
-
+		String mensagem = new String();
 		
-/*		if (selImagens.perteceGrupo(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY) == 0) {
+		builder.setTitle("Camera");
+		
+		if (selImagens.perteceGrupo(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY) == "0") {
 			builder.setMessage("Capturar imagem para novo grupo?");
 		} else {
-			builder.setMessage("Inserir nova imagem no grupo " + selImagens.perteceGrupo(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY)+" ?");
-		}*/
 
-		builder.setMessage("Capturar nova imagem?");
+			mensagem = "Inserir nova imagem ao " +selImagens.perteceGrupo(imgpath, selImagens.devolveListaSelecionados(imgpath, CreateListFiles()), posX, posY)+ " ?";
+			builder.setMessage(mensagem);
+		}
+
+		//builder.setMessage("Capturar nova imagem?");
 		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int which) {
@@ -299,53 +302,62 @@ public class SelectSpecificRegion extends Activity {
 		});
 
 		builder.create().show();
+
+		
 		
 	}
 		
 	public void desenhaImagemDisplay() {
-		Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(),
+		Bitmap bitmap = BitmapFactory.decodeResource(display.getResources(),
 				setDisplay());
-		
 		Paint paint = new Paint();
 		paint.setColor(Color.BLUE);
-		 paint.setTextSize(10);
-		  // text shadow
-		  paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
+		paint.setTextSize(10);
+		// text shadow
+		paint.setShadowLayer(1f, 0f, 1f, Color.WHITE);
 
-		
 		Bitmap workingBitmap = Bitmap.createBitmap(bitmap);
 		Bitmap mutableBitmap = workingBitmap
 				.copy(Bitmap.Config.ARGB_8888, true);
-		
+
 		Canvas canvas = new Canvas(mutableBitmap);
-		
+
 		Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
 		paintText.setColor(Color.BLUE);
-		paintText.setTextSize(50);
+		paintText.setTextSize(12);
 		paintText.setStyle(Style.FILL);
-		paintText.setShadowLayer(10f, 10f, 10f, Color.BLACK);
+		paintText.setFakeBoldText(true);
 
-		Rect rectText = new Rect();
-		paintText.getTextBounds("1", 0, 1,
-				rectText);
+		paintText.setShadowLayer(30f, 10f, 10f, Color.BLACK);
 
-		canvas.drawText("1", 0, rectText.height(), paintText);
-		
-		
-		// CRIAR O FOR PRA QUE DESENHE TODOS OS PONTOS NECESSARIOS
+		selImagens = new ExListViewController();
+		String imgpath = new MelanomaPicsSaveControl().setImagePath();
+		// replica os pontos do bitmap
 
-		canvas.drawCircle(10, 10, 3, paint);
-		
-		display.setAdjustViewBounds(true);
+		File[] list = new File[selImagens.devolveQtdTotal(CreateListFiles())];
+		list = selImagens.devolveListaSelecionados(imgpath, CreateListFiles());
+
+		for (int y = 0; y < selImagens.devolveQtd(imgpath, CreateListFiles()); y++) {
+			Rect rectText = new Rect();
+			paintText.getTextBounds(
+					Integer.toString(selImagens.getGroupNumber(list[y])), 0, 1,
+					rectText);
+			int ajustePosx = (int) (selImagens.getXArquivo(list[y].getName()) / 4.65);
+			int ajustePosy = (int) (selImagens.getYArquivo(list[y].getName()) / 4.4);
+
+			canvas.drawText(
+					Integer.toString(selImagens.getGroupNumber(list[y])),
+					ajustePosx, ajustePosy, paintText);
+		}
+		display.setAdjustViewBounds(false);
 		display.setImageBitmap(mutableBitmap);
-
 	}
 
 	public int setDisplay() {
 		// os valores dos digitos comparativos são:
 		// primeiro digito numero da gallery
 		// segundo posição vetorial na gallery
-		switch (SelecionaRegiaoCorporal.positionGallery) {
+		switch (SelectBodyPart.positionGallery) {
 		case 10:
 			display.setImageResource(R.drawable.a1);
 			return R.drawable.a1;

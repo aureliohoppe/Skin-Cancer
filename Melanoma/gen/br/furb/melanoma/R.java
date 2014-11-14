@@ -55,10 +55,11 @@ public final class R {
         public static final int ic_launcher=0x7f02001a;
     }
     public static final class id {
-        public static final int ExpandableListViewFixImages=0x7f080011;
+        public static final int ExpandableListViewFixImages=0x7f080012;
         public static final int FrameFixImage=0x7f08000f;
-        public static final int action_settings=0x7f080015;
+        public static final int action_settings=0x7f080017;
         public static final int btOkPaciente=0x7f080004;
+        public static final int button1=0x7f080011;
         public static final int buttonc1=0x7f080006;
         public static final int edCPFPaciente=0x7f080003;
         public static final int edNomePaciente=0x7f080002;
@@ -68,15 +69,16 @@ public final class R {
         public static final int galleryC=0x7f08000c;
         public static final int galleryD=0x7f08000d;
         public static final int galleryE=0x7f08000e;
-        public static final int group_name=0x7f080014;
+        public static final int group_name=0x7f080016;
         public static final int imageViewFixImages=0x7f080010;
-        public static final int image_date=0x7f080012;
+        public static final int image_date=0x7f080014;
         public static final int linearLayout1=0x7f080007;
         public static final int linearLayout2=0x7f080005;
         public static final int listViewPacientes=0x7f080008;
-        public static final int melanoma_photo=0x7f080013;
+        public static final int melanoma_photo=0x7f080015;
         public static final int textView1=0x7f080001;
         public static final int textView2=0x7f080000;
+        public static final int textViewItem=0x7f080013;
     }
     public static final class layout {
         public static final int activity_cadastro_paciente=0x7f030000;
@@ -84,8 +86,9 @@ public final class R {
         public static final int activity_melanoma_photo_analyser=0x7f030002;
         public static final int activity_seleciona_regiao_corporal=0x7f030003;
         public static final int activity_select_specific_region=0x7f030004;
-        public static final int listview_child_melanoma=0x7f030005;
-        public static final int listview_group_melanoma=0x7f030006;
+        public static final int list_view_row_item=0x7f030005;
+        public static final int listview_child_melanoma=0x7f030006;
+        public static final int listview_group_melanoma=0x7f030007;
     }
     public static final class menu {
         public static final int cadastro_paciente=0x7f070000;

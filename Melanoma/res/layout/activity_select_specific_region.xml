@@ -16,19 +16,27 @@
 
         <br.furb.melanoma.CustomImageView
             android:id="@+id/imageViewFixImages"
-            android:layout_width="657dp"
-            android:layout_height="345dp"
+            android:layout_width="651dp"
+            android:layout_height="344dp"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/ExpandableListViewFixImages"
+        android:onClick="screenRefresh"
+        android:text="Atualizar Pontos" />
 
     <ExpandableListView
         android:id="@+id/ExpandableListViewFixImages"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_height="331dp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@+id/FrameFixImage" >
-
     </ExpandableListView>
 
 </RelativeLayout>

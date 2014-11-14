@@ -5,7 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import ExpandableListViewControl.*;
+
+import br.furb.melanoma.R;
+import br.furb.melanoma.ExpandableListViewControl.*;
+import br.furb.melanoma.R.id;
+import br.furb.melanoma.R.layout;
+import br.furb.melanoma.R.menu;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.ComponentName;
@@ -19,45 +24,51 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-import ExpandableListViewControl.*;
 
 public class MelanomaActivity extends Activity{
-
-
-	ListView listviewPaciente = (ListView) findViewById(R.id.listViewPacientes);
+	
+	static String pacientSelected;
+	
+	private ListView listviewPaciente;
 	String[] values;
 	private File file;
-	private List<String> myList;
-	private  ListViewAdapter lvi;
-
+	private ListView mainListView;
+	private ArrayAdapter<String> listAdapter;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_melanoma);
 
-		myList = new ArrayList<String>();
-		
-		
 		String root_sd = Environment.getExternalStorageDirectory().toString();
 		file = new File(root_sd + "/MelanomaPics/");
-		File list[] = file.listFiles();
+		final File list[] = file.listFiles();
 
+		ArrayList<String> pacientes = new ArrayList<String>(); 
 		for (int i = 0; i < list.length; i++) {
-			myList.add(list[i].getName());
+			pacientes.add(list[i].getName());
 		}
 
-		ListViewAdapter lvi = new ListViewAdapter(this, R.id.listViewPacientes,myList);
+		// Find the ListView resource. 
+	    mainListView = (ListView) findViewById( R.id.listViewPacientes);
+	    listAdapter = new ArrayAdapter<String>(this, R.layout.list_view_row_item, pacientes);
+
+		mainListView.setAdapter(listAdapter);
 		
-
-		listviewPaciente.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-
-				Toast.makeText(getApplicationContext(),
-						"Click ListItem Number " + position, Toast.LENGTH_LONG)
-						.show();
-			}
-		});
+		// Defining the item click listener for listView
+        OnItemClickListener itemClickListener = new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
+                
+            	pacientSelected = list[position].getName();
+            	Intent in = new Intent(MelanomaActivity.this, SelectBodyPart.class);
+        		startActivity(in);
+            	System.out.println("Entrou no listner");
+            	
+             }
+        };
+ 
+        // Setting the item click listener for listView
+        mainListView.setOnItemClickListener(itemClickListener);
 	}
 
 

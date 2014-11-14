@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MelanomaActivity"
+            android:name="br.furb.melanoma.MelanomaActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SelectSpecificRegion"
+            android:name="br.furb.melanoma.SelectSpecificRegion"
             android:label="@string/title_activity_select_specific_region" >
         </activity>
         <activity
-            android:name=".SelecionaRegiaoCorporal"
+            android:name=".SelectBodyPart"
             android:label="@string/title_activity_seleciona_regiao_corporal" >
         </activity>
         <activity
@@ -45,7 +45,7 @@
         <activity
             android:name=".CadastroPaciente"
             android:label="@string/title_activity_cadastro_paciente"
-            android:parentActivityName=".MelanomaActivity" >
+            android:parentActivityName="br.furb.melanoma.MelanomaActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.furb.melanoma.MelanomaActivity" />

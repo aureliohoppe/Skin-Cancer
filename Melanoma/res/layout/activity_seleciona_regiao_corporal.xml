@@ -14,7 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:text="Selecione nas galerias abaixo a região em que deseja vincular uma imagem"
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"

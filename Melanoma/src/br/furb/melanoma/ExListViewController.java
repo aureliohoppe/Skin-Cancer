@@ -641,9 +641,14 @@ public class ExListViewController {
 		SelectSpecificRegion = new SelectSpecificRegion();
 
 		if (pt.controlaPontosExistentes(listaDeSelecionados, posx, posy)!= null){
-			SelectSpecificRegion.setPosX(pt.devolvePosX(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy).getName()));
-			SelectSpecificRegion.setPosY(pt.devolvePosY(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy).getName()));
-		}
+
+			int x ,y;
+			x=pt.devolvePosX(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy).getName());
+			y= pt.devolvePosY(pt.controlaPontosExistentes(listaDeSelecionados, posx, posy).getName());
+			
+			SelectSpecificRegion.posX=x;
+			SelectSpecificRegion.posY=y;
+				}
 	}
 	
 	// metodo que retorna o valor do maior grupo existente

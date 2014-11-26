@@ -8,19 +8,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.furb.melanoma.MelanomaPhotoAnalyser" >
 
-    <FrameLayout
-        android:id="@+id/frameLayout1"
+    <ImageView
+        android:id="@+id/imageZoom"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_centerHorizontal="true" >
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/frameLayout1"
-        android:layout_alignParentBottom="true"
-        android:orientation="vertical" >
-    </LinearLayout>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

@@ -57,20 +57,20 @@ public final class R {
     public static final class id {
         public static final int ExpandableListViewFixImages=0x7f080012;
         public static final int FrameFixImage=0x7f08000f;
+        public static final int TextView01=0x7f080010;
         public static final int action_settings=0x7f080017;
         public static final int btOkPaciente=0x7f080004;
-        public static final int button1=0x7f080011;
         public static final int buttonc1=0x7f080006;
         public static final int edCPFPaciente=0x7f080003;
         public static final int edNomePaciente=0x7f080002;
-        public static final int frameLayout1=0x7f080009;
         public static final int galleryA=0x7f08000a;
         public static final int galleryB=0x7f08000b;
         public static final int galleryC=0x7f08000c;
         public static final int galleryD=0x7f08000d;
         public static final int galleryE=0x7f08000e;
         public static final int group_name=0x7f080016;
-        public static final int imageViewFixImages=0x7f080010;
+        public static final int imageViewFixImages=0x7f080011;
+        public static final int imageZoom=0x7f080009;
         public static final int image_date=0x7f080014;
         public static final int linearLayout1=0x7f080007;
         public static final int linearLayout2=0x7f080005;

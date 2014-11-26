@@ -2,16 +2,25 @@ package br.furb.melanoma;
 
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class MelanomaPhotoAnalyser extends Activity {
-
+	ImageView imageZoom;
+	SelectSpecificRegion selSpcRegion;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_melanoma_photo_analyser);
+		
+		imageZoom = (ImageView) findViewById(R.id.imageZoom);
+		Uri fileUri = null;
+	    fileUri = Uri.fromFile(selSpcRegion.selected.getImage());
+		imageZoom.setImageURI(fileUri);		
 	}
 
 	@Override

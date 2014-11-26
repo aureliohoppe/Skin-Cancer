@@ -28,7 +28,6 @@ import android.widget.Toast;
 public class MelanomaActivity extends Activity{
 	
 	static String pacientSelected;
-	
 	private ListView listviewPaciente;
 	String[] values;
 	private File file;
@@ -46,6 +45,7 @@ public class MelanomaActivity extends Activity{
 		ArrayList<String> pacientes = new ArrayList<String>(); 
 		for (int i = 0; i < list.length; i++) {
 			pacientes.add(list[i].getName());
+			//pacientes.add(ajustaNome(list[i].getName()));
 		}
 
 		// Find the ListView resource. 
@@ -53,6 +53,9 @@ public class MelanomaActivity extends Activity{
 	    listAdapter = new ArrayAdapter<String>(this, R.layout.list_view_row_item, pacientes);
 
 		mainListView.setAdapter(listAdapter);
+		
+		
+		
 		
 		// Defining the item click listener for listView
         OnItemClickListener itemClickListener = new OnItemClickListener() {
@@ -62,7 +65,6 @@ public class MelanomaActivity extends Activity{
             	pacientSelected = list[position].getName();
             	Intent in = new Intent(MelanomaActivity.this, SelectBodyPart.class);
         		startActivity(in);
-            	System.out.println("Entrou no listner");
             	
              }
         };
@@ -83,4 +85,18 @@ public class MelanomaActivity extends Activity{
 		startActivity(in);
 	}
 	
+	public String ajustaNome(String arqName) {
+		String array[] = new String[5];
+		String data[] = new String[8];
+		String nome = new String();
+		String cpf = new String();
+
+		array = arqName.split("_");
+		nome = array[0];
+		cpf = array[1];
+
+		nome =  nome + "-" +cpf ;
+
+		return nome;
+	}
 }

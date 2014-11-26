@@ -3,7 +3,7 @@ package br.furb.melanoma.ExpandableListViewControl;
 import java.io.File;
 
 public class Child {
-	  private String Name;
+		private String Name;
 	    private File Image;
 
 	    public String getName() {

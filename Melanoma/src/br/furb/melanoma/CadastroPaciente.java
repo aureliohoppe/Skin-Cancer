@@ -46,9 +46,6 @@ public class CadastroPaciente extends Activity implements OnClickListener {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
@@ -60,14 +57,14 @@ public class CadastroPaciente extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		nome = edNome.getText().toString();
 		cpf = edCPF.getText().toString();
-		id = nome+"-"+cpf;
-		
+		id = nome + " - " + cpf;
+
 		final File root = new File(Environment.getExternalStorageDirectory()
-				+ File.separator + "MelanomaPics" + File.separator + id + File.separator);
+				+ File.separator + "MelanomaPics" + File.separator + id
+				+ File.separator);
 		root.mkdirs();
-		
+
 		Intent in = new Intent(CadastroPaciente.this, MelanomaActivity.class);
 		startActivity(in);
-		
 	}
 }
